@@ -19,6 +19,3 @@ global_average = comm.reduce(local_average, op=MPI.SUM, root=0)
 if rank == 0:
     final_average = global_average / size
     print("Final average:", final_average)
-    # local verification
-    rank1_data = np.array([10, 20, 30, 40, 50])
-    rank2_data = np.array([10, 20, 30, 40, 50]) * 2
