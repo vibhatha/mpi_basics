@@ -27,6 +27,7 @@ def comparison_plot(X, c1, l1, c2, l2):
     plt.title('K-means Clustering')
     plt.xlabel('X')
     plt.ylabel('Y')
+    plt.show()
 
 
 class BaseModel(ABC):
