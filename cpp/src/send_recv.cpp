@@ -95,6 +95,7 @@ int send_recv_array() {
         std::cout << "From " << SOURCE << " to " << DEST << std::endl;
     }
 
+    MPI_Finalize();
     return EXIT_SUCCESS;
 }
 
