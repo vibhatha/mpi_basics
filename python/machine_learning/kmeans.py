@@ -52,6 +52,7 @@ class KMeans(BaseModel):
         self._centroids = None
         self._labels = None
         self._file_prefix = file_prefix
+        self._init_centroids = None
         
     @property
     def lables(self):
@@ -61,9 +62,14 @@ class KMeans(BaseModel):
     def centroids(self):
         return self._centroids
     
+    @property
+    def initial_centroids(self):
+        return self._init_centroids
+    
     def _initialize_centroids(self, K, X):
         centroid_indices = np.random.choice(len(X), K, replace=False)
         centroids = X[centroid_indices.tolist()]
+        self._init_centroids = centroids
         return centroids
     
     def _calculate_euclidean_distance(self, centroids, X):
@@ -108,16 +114,18 @@ N = 10000
 M = 2
 
 X = np.random.rand(N, M)
-max_iter = 30
+max_iter = 300
 
+# plot results per iteration and visualize 
+# kmeans = KMeans(n_clusters=K, max_iter=max_iter, file_prefix="kmeans_plots/kmeans_clustering")
 
-kmeans = KMeans(n_clusters=K, max_iter=max_iter, file_prefix="kmeans_plots/kmeans_clustering")
+# no visualization
+kmeans = KMeans(n_clusters=K, max_iter=max_iter)
 kmeans.fit(X)
-
 
 from sklearn.cluster import KMeans as SciktKMeans
 
-scikit_kmeans = SciktKMeans(init='random', n_clusters=K, random_state=123, max_iter=max_iter).fit(X)
+scikit_kmeans = SciktKMeans(init=kmeans.initial_centroids, n_clusters=K, random_state=123, max_iter=max_iter).fit(X)
 print(scikit_kmeans.cluster_centers_)
 print(kmeans.centroids)
 
