@@ -117,11 +117,11 @@ X = np.random.rand(N, M)
 max_iter = 30
 
 # plot results per iteration and visualize 
-kmeans = KMeans(n_clusters=K, max_iter=max_iter, file_prefix="kmeans_plots/kmeans_clustering")
+# kmeans = KMeans(n_clusters=K, max_iter=max_iter, file_prefix="kmeans_plots/kmeans_clustering")
 
 # no visualization
-# kmeans = KMeans(n_clusters=K, max_iter=max_iter)
-# kmeans.fit(X)
+kmeans = KMeans(n_clusters=K, max_iter=max_iter)
+kmeans.fit(X)
 
 from sklearn.cluster import KMeans as SciktKMeans
 
@@ -135,8 +135,8 @@ plot(X, scikit_kmeans.cluster_centers_, scikit_kmeans.labels_)
 comparison_plot(X, scikit_kmeans.cluster_centers_, scikit_kmeans.labels_, kmeans.centroids, kmeans.lables)
 
 ## generate gif
-from util import generate_gif
+#from util import generate_gif
 
-input_path = "kmeans_plots"
-file_prefix = "kmeans_clustering"
-generate_gif(path=input_path, file_prefix=file_prefix, output_path="images", output_file="kmeans_clustering_animate.gif", duration=1000)
+#input_path = "kmeans_plots"
+#file_prefix = "kmeans_clustering"
+#generate_gif(path=input_path, file_prefix=file_prefix, output_path="images", output_file="kmeans_clustering_animate.gif", duration=1000)
