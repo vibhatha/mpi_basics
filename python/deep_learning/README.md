@@ -60,3 +60,38 @@ $$
 This iterative process of forward propagation, backpropagation, and weight update continues for a specified number of epochs or until the network's performance on the training data converges.
 
 Remember, while the above is a thorough overview of the neural network presented, deep learning research has introduced many additional concepts, techniques, and optimizations that can be applied to more complex models and tasks.
+
+## Parallelization of a Neural Network using MPI4py
+
+The training process of a neural network can be computationally intensive, especially when dealing with large datasets. To accelerate this process, one can exploit data parallelism, wherein the dataset is divided among multiple processors. Each processor computes the forward and backward passes for its subset of data. Later, the gradients from all processors are aggregated and used to update the neural network's weights. In this document, we elucidate the method of parallelizing a simple feedforward neural network using MPI (Message Passing Interface) through the `mpi4py` library.
+
+### Algorithm Overview
+
+The core idea is to split the training dataset into chunks, where each chunk is processed by a distinct MPI process. Each process calculates the gradients based on its chunk of data. Afterward, these gradients are aggregated across all processes to ensure consistent weight updates.
+
+#### Dataset Splitting
+
+Given $\(N\)$ data samples and $\(P\)$ MPI processes, each process handles $\(\frac{N}{P}\)$ samples. Specifically, process $\(i\)$ handles samples from index $\(i \times \frac{N}{P}\)$ to $\((i+1) \times \frac{N}{P} - 1\)$.
+
+$\[ X_{\text{local}} = X[i \times \frac{N}{P} : (i+1) \times \frac{N}{P}] \]$
+
+#### Forward and Backward Pass
+
+Each MPI process computes the forward and backward passes for its local data chunk, $\(X_{\text{local}}\)$, and calculates the local gradients for the weights and biases.
+
+#### Gradient Aggregation
+
+After computing the local gradients, processes collaborate to aggregate these gradients. The global gradient for any weight (or bias) is the average of its local gradients across all processes:
+
+$\[ \text{dW}_{\text{global}} = \frac{1}{P} \sum_{i=1}^{P} \text{dW}_{\text{local, } i} \]$
+$\[ \text{db}_{\text{global}} = \frac{1}{P} \sum_{i=1}^{P} \text{db}_{\text{local, } i} \]$
+
+This aggregation is achieved using the `Allreduce` operation provided by MPI, which performs element-wise addition of arrays across all processes and then broadcasts the result to all processes.
+
+#### Weight Update
+
+Using the global gradients, every process updates its copy of the neural network's weights and biases. Since all processes use the same global gradients, they all maintain consistent copies of the weights.
+
+### Conclusion
+
+By leveraging multiple processors and the `mpi4py` library, we can parallelize the training process of a neural network, leading to potentially faster convergence, especially when dealing with larger datasets. However, it's important to note that this simplistic approach may require further optimization and nuancing for more complex models and larger-scale applications.
