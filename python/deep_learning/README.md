@@ -1,23 +1,25 @@
 ## Simple Neural Network
 
 ### 1. Activation Function
-We use the sigmoid function, \( \sigma(z) \), as our activation function:
-\[ \sigma(z) = \frac{1}{1 + e^{-z}} \]
+We use the sigmoid function, $\( \sigma(z) \)$, as our activation function:
+$\[ \sigma(z) = \frac{1}{1 + e^{-z}} \]$
 
 The derivative of the sigmoid function, which is used during backpropagation, is:
-\[ \sigma'(z) = \sigma(z)(1 - \sigma(z)) \]
+$\[ \sigma'(z) = \sigma(z)(1 - \sigma(z)) \]$
 
 ### 2. Loss Function
 Although I didn't explicitly specify a loss function in the code, the backpropagation process suggests that we're using the mean squared error (MSE) for a given set of predictions \( \hat{y} \) and true values \( y \):
 
+$$
 \[ L(\hat{y}, y) = \frac{1}{2N} \sum_{i=1}^{N} (\hat{y}_i - y_i)^2 \]
+$$
 
-Here, \( N \) is the number of samples.
+Here, $\( N \)$ is the number of samples.
 
 ### 3. Forward Propagation
-This describes the process of passing an input \( X \) through the network to obtain the output \( \hat{y} \). The intermediate steps are:
+This describes the process of passing an input $\( X \)$ through the network to obtain the output $\( \hat{y} \)$. The intermediate steps are:
 1. Hidden layer pre-activation:
-\[ z_1 = XW_1 + b_1 \]
+$\[ z_1 = XW_1 + b_1 \]$
 2. Hidden layer activation:
 \[ a_1 = \sigma(z_1) \]
 3. Output layer pre-activation:
