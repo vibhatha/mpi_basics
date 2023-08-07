@@ -84,9 +84,9 @@ Each MPI process computes the forward and backward passes for its local data chu
 After computing the local gradients, processes collaborate to aggregate these gradients. The global gradient for any weight (or bias) is the average of its local gradients across all processes:
 
 
-$$ \text{dW}_{\text{global}} = \frac{1}{P} \sum_{i=1}^{P} \text{dW}_{\text{local, } i} $$
+$\[ \text{dW}_{\text{global}} = \frac{1}{P} \sum_{i=1}^{P} \text{dW}_{\text{local, } i} \]$
 
-$$ \text{db}_{\text{global}} = \frac{1}{P} \sum_{i=1}^{P} \text{db}_{\text{local, } i} $$
+$\[ \text{db}_{\text{global}} = \frac{1}{P} \sum_{i=1}^{P} \text{db}_{\text{local, } i} \]$
 
 
 This aggregation is achieved using the `Allreduce` operation provided by MPI, which performs element-wise addition of arrays across all processes and then broadcasts the result to all processes.
