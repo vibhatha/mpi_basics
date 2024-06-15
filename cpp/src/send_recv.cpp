@@ -8,7 +8,7 @@ int send_recv_vector();
 int simple_send_recv();
 
 int main(int argc, char** argv) {
-    if(argc > 0) {
+    if(argc > 1) {
         int arg1 = std::stoi(argv[1]);
         if (arg1 == 1) {
             simple_send_recv();
