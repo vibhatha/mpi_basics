@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     mt19937 generator(rd());
     uniform_int_distribution<int> int_distribution(1, 100);
 
-    MPI_Init(NULL, NULL);
+    MPI_Init(&argc, &argv);
 
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -48,6 +48,6 @@ void mpi_send_number(int number_to_send, int destination, int rank) {
 
 void mpi_receive(int *receive, int source, int rank) {
     cout << format("{}. Receiving from rank {}", rank, source) << endl;
-    MPI_Recv(receive, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Recv(receive, 1, MPI_INT, source, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     cout << format("{}. received number {} from rank {}", rank, *receive, source) << endl;
 }

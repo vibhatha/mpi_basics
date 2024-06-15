@@ -41,14 +41,11 @@ int simple_send_recv() {
         return EXIT_FAILURE;
     }
 
-//    int number;
     if (rank == 0) {
         int number = 12345;
-        // Send the number to process 1
         MPI_Send(&number, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
         std::cout << "Process 0 sent number " << number << " to process 1\n";
     } else if (rank == 1) {
-        // Receive the number from process 0
         int receive;
         MPI_Recv(&receive, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         std::cout << "Process 1 received number " << receive << " from process 0\n";
