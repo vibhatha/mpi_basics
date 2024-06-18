@@ -1,14 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 project(MyMPIProject)
 
-# Enable C++11
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Find MPI
 find_package(MPI REQUIRED)
 
-# If MPI was found, set the include directories and link the libraries
 if(MPI_FOUND)
     include_directories(SYSTEM ${MPI_INCLUDE_PATH})
 else(MPI_FOUND)

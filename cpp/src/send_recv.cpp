@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 }
 
 int simple_send_recv() {
-    MPI_Init(NULL, NULL);
+    MPI_Init(nullptr, nullptr);
 
     // Find out rank and size
     int rank;
@@ -56,7 +56,7 @@ int simple_send_recv() {
 }
 
 int send_recv_array() {
-    MPI_Init(NULL, NULL);
+    MPI_Init(nullptr, nullptr);
 
     const int SOURCE =0;
     const int DEST = 1;
@@ -83,6 +83,7 @@ int send_recv_array() {
         print_int_array(data, SIZE);
         std::cout << "From " << SOURCE << " to " << DEST << std::endl;
         MPI_Send(data, SIZE, MPI_INT, DEST, 0, MPI_COMM_WORLD);
+        delete[] data;
     }
 
     else if (rank==DEST) {
@@ -91,6 +92,7 @@ int send_recv_array() {
         std::cout << "Receiving Data : ";
         print_int_array(recv_data, SIZE);
         std::cout << "From " << SOURCE << " to " << DEST << std::endl;
+        delete[] recv_data;
     }
 
     MPI_Finalize();
@@ -98,7 +100,7 @@ int send_recv_array() {
 }
 
 int send_recv_vector() {
-    MPI_Init(NULL, NULL);
+    MPI_Init(nullptr, nullptr);
     const int SOURCE =0;
     const int DEST = 1;
 
@@ -113,7 +115,7 @@ int send_recv_vector() {
     }
 
     if(rank == 0) {
-        std::cout << "\nSending and Receving Standard Vector" << std::endl;
+        std::cout << "\nSending and Receiving Standard Vector" << std::endl;
     }
     const int SIZE = 5;
     if (rank==SOURCE) {
@@ -130,6 +132,7 @@ int send_recv_vector() {
         std::cout << "Receiving Data : ";
         print_int_array(recv_data, SIZE);
         std::cout << "From " << SOURCE << " to " << DEST << std::endl;
+        delete[] recv_data;
     }
 
     MPI_Finalize();
