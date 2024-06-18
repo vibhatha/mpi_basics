@@ -29,8 +29,18 @@ pip install mpi4py
 ### C++
 
 ```bash
-cd cpp
+cd cpp\build
 mpirun -n 4 ./hello_world
+```
+
+```bash
+cd cpp\build
+mpirun -n 4 ./send_recv <program_num>
+
+Program Numbers:
+1. Send Number 
+2. Send Array
+3. Send Vector
 ```
 
 ### Python
